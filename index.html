@@ -69,5 +69,9 @@
 </head>
   <body>
     <div id="root"></div>
+    <!-- Add Babel to transpile JSX/TSX in the browser -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <!-- Load the main application script using Babel -->
+    <script type="text/babel" data-presets="react,typescript" data-type="module" src="index.tsx"></script>
   </body>
 </html>

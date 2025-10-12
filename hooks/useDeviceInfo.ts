@@ -1,6 +1,49 @@
 import { useState, useEffect } from 'react';
 import { DeviceInfo } from '../types';
 
+const parseUserAgent = (ua: string) => {
+    let os = 'Unknown OS';
+    let deviceModel = 'Unknown Device';
+
+    // OS Detection
+    if (/android/i.test(ua)) {
+        const match = ua.match(/Android ([\d.]+)/);
+        os = match ? `Android ${match[1]}` : 'Android';
+    } else if (/iPad|iPhone|iPod/.test(ua)) {
+        const match = ua.match(/OS ([\d_]+)/);
+        os = match ? `iOS ${match[1].replace(/_/g, '.')}` : 'iOS';
+    } else if (/Windows NT 10.0/.test(ua)) {
+        os = 'Windows 11/10';
+    } else if (/Windows NT 6.3/.test(ua)) {
+        os = 'Windows 8.1';
+    } else if (/Windows NT 6.2/.test(ua)) {
+        os = 'Windows 8';
+    } else if (/Windows NT 6.1/.test(ua)) {
+        os = 'Windows 7';
+    } else if (/Mac OS X/.test(ua)) {
+        const match = ua.match(/Mac OS X ([\d_]+)/);
+        os = match ? `macOS ${match[1].replace(/_/g, '.')}` : 'macOS';
+    } else if (/Linux/.test(ua) && !/android/i.test(ua)) {
+        os = 'Linux';
+    }
+
+    // Device Model Detection
+    const androidModelMatch = ua.match(/\(Linux; Android [\d.]+; (.*?)\)/);
+    if (androidModelMatch && androidModelMatch[1]) {
+        deviceModel = androidModelMatch[1].split(' Build/')[0];
+    } else if (/iPhone/.test(ua)) {
+        deviceModel = 'iPhone';
+    } else if (/iPad/.test(ua)) {
+        deviceModel = 'iPad';
+    } else if (/iPod/.test(ua)) {
+        deviceModel = 'iPod Touch';
+    } else if (os.startsWith('Windows') || os.startsWith('macOS') || os === 'Linux') {
+        deviceModel = 'Desktop / Laptop';
+    }
+    
+    return { os, deviceModel };
+};
+
 export const useDeviceInfo = () => {
   const [deviceInfo, setDeviceInfo] = useState<DeviceInfo>({} as DeviceInfo);
   const [loading, setLoading] = useState<boolean>(true);
@@ -8,7 +51,10 @@ export const useDeviceInfo = () => {
   useEffect(() => {
     const fetchDeviceInfo = async () => {
       try {
-        const info: DeviceInfo = {
+        const { os, deviceModel } = parseUserAgent(navigator.userAgent);
+        const connection = (navigator as any).connection;
+
+        const info: Partial<DeviceInfo> = {
           userAgent: navigator.userAgent,
           platform: navigator.platform,
           language: navigator.language,
@@ -22,7 +68,7 @@ export const useDeviceInfo = () => {
           pixelDepth: window.screen.pixelDepth,
           deviceMemory: (navigator as any).deviceMemory ? `${(navigator as any).deviceMemory}` : 'N/A',
           cpuCores: navigator.hardwareConcurrency ? `${navigator.hardwareConcurrency}` : 'N/A',
-          connectionType: ((navigator as any).connection?.effectiveType)?.toUpperCase() || 'N/A',
+          connectionType: connection?.effectiveType?.toUpperCase() || 'N/A',
           batteryLevel: null,
           isCharging: null,
           touchSupport: 'ontouchstart' in window || navigator.maxTouchPoints > 0,
@@ -35,6 +81,11 @@ export const useDeviceInfo = () => {
           availableScreenHeight: window.screen.availHeight,
           screenOrientation: window.screen.orientation.type,
           geolocationPermission: 'N/A',
+          os,
+          deviceModel,
+          networkSpeed: connection?.downlink ? `${connection.downlink}` : 'N/A',
+          roundTripTime: connection?.rtt ? `${connection.rtt}` : 'N/A',
+          dataSaverEnabled: connection?.saveData ?? null,
         };
 
         try {
@@ -80,7 +131,7 @@ export const useDeviceInfo = () => {
             info.isp = 'Unavailable';
         }
 
-        setDeviceInfo(info);
+        setDeviceInfo(info as DeviceInfo);
       } catch (error) {
         console.error("Failed to fetch device info:", error);
       } finally {

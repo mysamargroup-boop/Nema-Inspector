@@ -30,4 +30,10 @@ export interface DeviceInfo {
   city?: string;
   country?: string;
   isp?: string;
+  // New properties
+  os?: string;
+  deviceModel?: string;
+  networkSpeed?: string | null;
+  roundTripTime?: string | null;
+  dataSaverEnabled?: boolean | null;
 }

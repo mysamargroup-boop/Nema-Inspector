@@ -6,7 +6,8 @@ export type IconName =
   'memory' | 'signal' | 'battery' | 'touch' | 'ratio' |
   'timezone' | 'vendor' | 'shield' | 'pdf' | 'screen-arrows' |
   'orientation' | 'location' | 'ip' | 'isp' | 'city' | 
-  'country' | 'copy' | 'check' | 'logo' | 'download' | 'clock';
+  'country' | 'copy' | 'check' | 'logo' | 'download' | 'clock' |
+  'speed' | 'rtt' | 'data-saver' | 'os' | 'device';
 
 interface IconProps {
   name: IconName;
@@ -46,6 +47,11 @@ export const Icon: React.FC<IconProps> = ({ name, className }) => {
     logo: <path strokeLinecap="round" strokeLinejoin="round" d="M12 2.25c-5.462 0-9.922 4.394-9.995 9.848-.052 3.821 2.058 7.29 5.237 8.89a9.782 9.782 0 0 0 4.758 1.262c5.462 0 9.922-4.394 9.995-9.848.052-3.821-2.058-7.29-5.237-8.89a9.782 9.782 0 0 0-4.758-1.262Z M12 2.25v19.5" />,
     download: <path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />,
     clock: <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />,
+    speed: <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 3.75h7.5a2.25 2.25 0 0 1 2.25 2.25v12a2.25 2.25 0 0 1-2.25 2.25h-7.5a2.25 2.25 0 0 1-2.25-2.25v-12a2.25 2.25 0 0 1 2.25-2.25Zm0 3.75V12m0 0v3.75m0-3.75h7.5m-7.5 0h.008v.008H8.25V12Zm2.25-4.5h.008v.008H10.5V7.5Zm3 0h.008v.008H13.5V7.5Z" />,
+    rtt: <path strokeLinecap="round" strokeLinejoin="round" d="M7.5 21 3 16.5m0 0L7.5 12M3 16.5h12.75m2.25-12L21 9m0 0-4.5-4.5M21 9H8.25" />,
+    'data-saver': <path strokeLinecap="round" strokeLinejoin="round" d="M12 21a9 9 0 0 1-9-9 9 9 0 0 1 9-9 9 9 0 0 1 9 9c0 2.347-.94 4.486-2.475 6.025A9.75 9.75 0 0 1 12 21Z" />,
+    os: <path strokeLinecap="round" strokeLinejoin="round" d="M6.75 7.5 3 12l3.75 4.5M17.25 7.5 21 12l-3.75 4.5M14.25 4.5l-4.5 15" />,
+    device: <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 1.5H8.25A2.25 2.25 0 0 0 6 3.75v16.5a2.25 2.25 0 0 0 2.25 2.25h7.5A2.25 2.25 0 0 0 18 20.25V3.75A2.25 2.25 0 0 0 15.75 1.5h-2.25m-3 0V3h3V1.5m-3 0h3m-3 18.75h3" />,
   };
   
   return (

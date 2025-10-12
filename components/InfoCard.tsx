@@ -50,11 +50,17 @@ const renderValue = (title: string, value: string | number | boolean) => {
         );
     }
     
-    if (['User Agent', 'Browser Vendor', 'Timezone', 'Screen Orientation', 'IP Address', 'ISP'].includes(title)) {
+    if (['User Agent', 'Browser Vendor', 'Timezone', 'Screen Orientation', 'IP Address', 'ISP', 'Operating System', 'Device Model'].includes(title)) {
         return <span className="text-sm font-medium text-slate-800 dark:text-white break-all">{String(value)}</span>;
     }
 
-    if (typeof value === 'string' && (value.endsWith('px') || value.endsWith('%'))) {
+    const unitMatch = title.match(/\(([^)]+)\)/);
+    if (unitMatch) {
+        const unit = unitMatch[1];
+        return <><span className="text-2xl sm:text-3xl font-bold text-slate-800 dark:text-white">{String(value)}</span><span className="text-slate-500 dark:text-slate-400 text-lg ml-1.5">{unit}</span></>;
+    }
+
+    if (typeof value === 'string' && value.includes('%')) {
          const parts = value.match(/(\d+\.?\d*)(.*)/);
          if(parts) {
             return <><span className="text-2xl sm:text-3xl font-bold text-slate-800 dark:text-white">{parts[1]}</span><span className="text-slate-500 dark:text-slate-400 text-lg ml-1">{parts[2]}</span></>

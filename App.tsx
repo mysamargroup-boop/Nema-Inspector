@@ -23,12 +23,16 @@ interface ModalData {
 const infoItems: { key: keyof ReturnType<typeof useDeviceInfo>['deviceInfo']; title: string; icon: IconName }[] = [
   { key: 'onlineStatus', title: 'Network Status', icon: 'wifi' },
   { key: 'connectionType', title: 'Connection Type', icon: 'signal' },
+  { key: 'networkSpeed', title: 'Network Speed (Mbps)', icon: 'speed' },
+  { key: 'roundTripTime', title: 'Round-Trip Time (ms)', icon: 'rtt' },
+  { key: 'dataSaverEnabled', title: 'Data Saver', icon: 'data-saver' },
   { key: 'ipAddress', title: 'IP Address', icon: 'ip' },
   { key: 'isp', title: 'ISP', icon: 'isp' },
   { key: 'city', title: 'City', icon: 'city' },
   { key: 'country', title: 'Country', icon: 'country' },
+  { key: 'os', title: 'Operating System', icon: 'os' },
+  { key: 'deviceModel', title: 'Device Model', icon: 'device' },
   { key: 'userAgent', title: 'User Agent', icon: 'browser' },
-  { key: 'platform', title: 'Platform', icon: 'cpu' },
   { key: 'language', title: 'Language', icon: 'globe' },
   { key: 'browserVendor', title: 'Browser Vendor', icon: 'vendor' },
   { key: 'doNotTrack', title: 'Do Not Track', icon: 'shield' },
@@ -53,7 +57,10 @@ const infoItems: { key: keyof ReturnType<typeof useDeviceInfo>['deviceInfo']; ti
   { key: 'isCharging', title: 'Charging Status', icon: 'zap' },
 ];
 
-const approximateKeys: (keyof ReturnType<typeof useDeviceInfo>['deviceInfo'])[] = ['deviceMemory', 'cpuCores', 'connectionType', 'ipAddress', 'isp', 'city', 'country'];
+const approximateKeys: (keyof ReturnType<typeof useDeviceInfo>['deviceInfo'])[] = [
+    'deviceMemory', 'cpuCores', 'connectionType', 'ipAddress', 'isp', 'city', 'country', 
+    'os', 'deviceModel', 'networkSpeed', 'roundTripTime'
+];
 
 const App: React.FC = () => {
   const { deviceInfo, loading } = useDeviceInfo();

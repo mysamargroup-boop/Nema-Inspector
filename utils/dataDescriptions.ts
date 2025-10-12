@@ -29,4 +29,9 @@ export const dataDescriptions: Record<string, string> = {
     'Geolocation Permission': 'The status of the permission for the website to access your device\'s location (e.g., granted, prompt, denied).',
     'Battery Level': 'The current battery level of the device as a percentage.',
     'Charging Status': 'Indicates if the device\'s battery is currently charging.',
+    'Operating System': 'The operating system your device is running, as identified from the browser\'s User Agent string.',
+    'Device Model': 'The model of your device, as identified from the browser\'s User Agent string. This is often more accurate on mobile devices.',
+    'Network Speed (Mbps)': 'An estimate of the download speed in Megabits per second (Mbps) for your current connection. This is based on the connection type and conditions.',
+    'Round-Trip Time (ms)': 'An estimate of the round-trip time in milliseconds (ms). This is the time it takes for a signal to get from your device to a server and back, indicating network latency.',
+    'Data Saver': 'Indicates if you have enabled the data-saving feature in your browser, which may reduce data usage by compressing images and other content.',
 };
