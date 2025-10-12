@@ -22,7 +22,7 @@ export const useDeviceInfo = () => {
           pixelDepth: window.screen.pixelDepth,
           deviceMemory: (navigator as any).deviceMemory ? `${(navigator as any).deviceMemory}` : 'N/A',
           cpuCores: navigator.hardwareConcurrency ? `${navigator.hardwareConcurrency}` : 'N/A',
-          connectionType: (navigator as any).connection ? (navigator as any).connection.effectiveType : 'N/A',
+          connectionType: ((navigator as any).connection?.effectiveType)?.toUpperCase() || 'N/A',
           batteryLevel: null,
           isCharging: null,
           touchSupport: 'ontouchstart' in window || navigator.maxTouchPoints > 0,
