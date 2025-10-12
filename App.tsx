@@ -20,6 +20,41 @@ interface ModalData {
   description: string;
 }
 
+const infoItems: { key: keyof ReturnType<typeof useDeviceInfo>['deviceInfo']; title: string; icon: IconName }[] = [
+  { key: 'onlineStatus', title: 'Network Status', icon: 'wifi' },
+  { key: 'connectionType', title: 'Connection Type', icon: 'signal' },
+  { key: 'ipAddress', title: 'IP Address', icon: 'ip' },
+  { key: 'isp', title: 'ISP', icon: 'isp' },
+  { key: 'city', title: 'City', icon: 'city' },
+  { key: 'country', title: 'Country', icon: 'country' },
+  { key: 'userAgent', title: 'User Agent', icon: 'browser' },
+  { key: 'platform', title: 'Platform', icon: 'cpu' },
+  { key: 'language', title: 'Language', icon: 'globe' },
+  { key: 'browserVendor', title: 'Browser Vendor', icon: 'vendor' },
+  { key: 'doNotTrack', title: 'Do Not Track', icon: 'shield' },
+  { key: 'cookiesEnabled', title: 'Cookies Enabled', icon: 'cookie' },
+  { key: 'pdfViewerEnabled', title: 'PDF Viewer Enabled', icon: 'pdf' },
+  { key: 'touchSupport', title: 'Touch Support', icon: 'touch' },
+  { key: 'screenWidth', title: 'Screen Width', icon: 'monitor' },
+  { key: 'screenHeight', title: 'Screen Height', icon: 'monitor' },
+  { key: 'availableScreenWidth', title: 'Available Screen Width', icon: 'screen-arrows' },
+  { key: 'availableScreenHeight', title: 'Available Screen Height', icon: 'screen-arrows' },
+  { key: 'windowWidth', title: 'Window Width', icon: 'window' },
+  { key: 'windowHeight', title: 'Window Height', icon: 'window' },
+  { key: 'screenOrientation', title: 'Screen Orientation', icon: 'orientation' },
+  { key: 'colorDepth', title: 'Color Depth', icon: 'palette' },
+  { key: 'pixelDepth', title: 'Pixel Depth', icon: 'palette' },
+  { key: 'devicePixelRatio', title: 'Device Pixel Ratio', icon: 'ratio' },
+  { key: 'deviceMemory', title: 'Device Memory (GB)', icon: 'memory' },
+  { key: 'cpuCores', title: 'CPU Cores', icon: 'cpu' },
+  { key: 'timezone', title: 'Timezone', icon: 'timezone' },
+  { key: 'geolocationPermission', title: 'Geolocation Permission', icon: 'location' },
+  { key: 'batteryLevel', title: 'Battery Level', icon: 'battery' },
+  { key: 'isCharging', title: 'Charging Status', icon: 'zap' },
+];
+
+const approximateKeys: (keyof ReturnType<typeof useDeviceInfo>['deviceInfo'])[] = ['deviceMemory', 'cpuCores', 'connectionType', 'ipAddress', 'isp', 'city', 'country'];
+
 const App: React.FC = () => {
   const { deviceInfo, loading } = useDeviceInfo();
   const [modalData, setModalData] = useState<ModalData | null>(null);
@@ -69,58 +104,23 @@ const App: React.FC = () => {
     });
   };
 
-  const infoItems: { key: keyof typeof deviceInfo; title: string; icon: IconName }[] = [
-    { key: 'onlineStatus', title: 'Network Status', icon: 'wifi' },
-    { key: 'connectionType', title: 'Connection Type', icon: 'signal' },
-    { key: 'ipAddress', title: 'IP Address', icon: 'ip' },
-    { key: 'isp', title: 'ISP', icon: 'isp' },
-    { key: 'city', title: 'City', icon: 'city' },
-    { key: 'country', title: 'Country', icon: 'country' },
-    { key: 'userAgent', title: 'User Agent', icon: 'browser' },
-    { key: 'platform', title: 'Platform', icon: 'cpu' },
-    { key: 'language', title: 'Language', icon: 'globe' },
-    { key: 'browserVendor', title: 'Browser Vendor', icon: 'vendor' },
-    { key: 'doNotTrack', title: 'Do Not Track', icon: 'shield' },
-    { key: 'cookiesEnabled', title: 'Cookies Enabled', icon: 'cookie' },
-    { key: 'pdfViewerEnabled', title: 'PDF Viewer Enabled', icon: 'pdf' },
-    { key: 'touchSupport', title: 'Touch Support', icon: 'touch' },
-    { key: 'screenWidth', title: 'Screen Width', icon: 'monitor' },
-    { key: 'screenHeight', title: 'Screen Height', icon: 'monitor' },
-    { key: 'availableScreenWidth', title: 'Available Screen Width', icon: 'screen-arrows' },
-    { key: 'availableScreenHeight', title: 'Available Screen Height', icon: 'screen-arrows' },
-    { key: 'windowWidth', title: 'Window Width', icon: 'window' },
-    { key: 'windowHeight', title: 'Window Height', icon: 'window' },
-    { key: 'screenOrientation', title: 'Screen Orientation', icon: 'orientation' },
-    { key: 'colorDepth', title: 'Color Depth', icon: 'palette' },
-    { key: 'pixelDepth', title: 'Pixel Depth', icon: 'palette' },
-    { key: 'devicePixelRatio', title: 'Device Pixel Ratio', icon: 'ratio' },
-    { key: 'deviceMemory', title: 'Device Memory (GB)', icon: 'memory' },
-    { key: 'cpuCores', title: 'CPU Cores', icon: 'cpu' },
-    { key: 'timezone', title: 'Timezone', icon: 'timezone' },
-    { key: 'geolocationPermission', title: 'Geolocation Permission', icon: 'location' },
-    { key: 'batteryLevel', title: 'Battery Level', icon: 'battery' },
-    { key: 'isCharging', title: 'Charging Status', icon: 'zap' },
-  ];
-
-  const approximateKeys: (keyof typeof deviceInfo)[] = ['deviceMemory', 'cpuCores', 'connectionType', 'ipAddress', 'isp', 'city', 'country'];
-
   return (
-    <div className="min-h-screen bg-transparent text-white flex flex-col">
+    <div className="min-h-screen bg-transparent text-slate-900 dark:text-white flex flex-col">
       <Header onDownloadReport={handleDownloadReport} />
       
-      <main className="w-full max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-4 pt-24 pb-8 flex-grow">
+      <main className="w-full max-w-[1576px] mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-8 flex-grow">
         <div className="text-center mb-10">
            <h1 className="text-4xl sm:text-5xl font-extrabold tracking-tight bg-gradient-to-r from-sky-400 to-blue-500 text-transparent bg-clip-text">
               Device Inspector
             </h1>
-            <p className="mt-4 text-lg text-slate-400 max-w-2xl mx-auto">
+            <p className="mt-4 text-lg text-slate-500 dark:text-slate-400 max-w-2xl mx-auto">
               Your device's vital statistics, beautifully presented. Here's what the browser knows about you.
             </p>
         </div>
 
         {loading ? (
           <div className="flex justify-center items-center h-64">
-             <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-sky-400"></div>
+             <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-sky-500"></div>
           </div>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">

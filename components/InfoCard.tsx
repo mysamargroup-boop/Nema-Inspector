@@ -44,24 +44,24 @@ interface InfoCardProps {
 const renderValue = (title: string, value: string | number | boolean) => {
     if (typeof value === 'boolean') {
         return (
-            <span className={`px-3 py-1 text-sm font-medium rounded-full ${value ? 'bg-green-500/20 text-green-300' : 'bg-red-500/20 text-red-300'}`}>
+            <span className={`px-3 py-1 text-sm font-medium rounded-full ${value ? 'bg-green-100 dark:bg-green-500/20 text-green-700 dark:text-green-300' : 'bg-red-100 dark:bg-red-500/20 text-red-700 dark:text-red-300'}`}>
                 {value ? 'Enabled' : 'Disabled'}
             </span>
         );
     }
     
     if (['User Agent', 'Browser Vendor', 'Timezone', 'Screen Orientation', 'IP Address', 'ISP'].includes(title)) {
-        return <span className="text-sm font-medium text-white break-all">{String(value)}</span>;
+        return <span className="text-sm font-medium text-slate-800 dark:text-white break-all">{String(value)}</span>;
     }
 
     if (typeof value === 'string' && (value.endsWith('px') || value.endsWith('%'))) {
          const parts = value.match(/(\d+\.?\d*)(.*)/);
          if(parts) {
-            return <><span className="text-2xl sm:text-3xl font-bold text-white">{parts[1]}</span><span className="text-slate-400 text-lg ml-1">{parts[2]}</span></>
+            return <><span className="text-2xl sm:text-3xl font-bold text-slate-800 dark:text-white">{parts[1]}</span><span className="text-slate-500 dark:text-slate-400 text-lg ml-1">{parts[2]}</span></>
          }
     }
 
-    return <span className="text-2xl sm:text-3xl font-bold text-white break-words">{String(value)}</span>;
+    return <span className="text-2xl sm:text-3xl font-bold text-slate-800 dark:text-white break-words">{String(value)}</span>;
 }
 
 export const InfoCard: React.FC<InfoCardProps> = ({ iconName, title, value, index, isApproximate, onClick }) => {
@@ -85,9 +85,9 @@ export const InfoCard: React.FC<InfoCardProps> = ({ iconName, title, value, inde
     <MotionDiv
       index={index}
       onClick={onClick}
-      className="relative group bg-neutral-900/50 border border-neutral-800 rounded-xl p-5 backdrop-blur-sm transition-all duration-300 hover:border-sky-500/50 hover:bg-neutral-800/60 hover:-translate-y-1 cursor-pointer"
+      className="relative group bg-white/50 dark:bg-neutral-900/50 border border-neutral-200 dark:border-neutral-800 rounded-xl p-5 backdrop-blur-sm transition-all duration-300 hover:border-sky-500/50 hover:bg-white dark:hover:bg-neutral-800/60 hover:-translate-y-1 cursor-pointer"
     >
-      <div className="absolute -inset-px rounded-xl border-2 border-transparent opacity-0 [background:radial-gradient(100px_circle_at_var(--x)_var(--y),rgba(34,197,94,0.2),transparent_40%)] group-hover:opacity-100 transition-opacity duration-300" 
+      <div className="absolute -inset-px rounded-xl border-2 border-transparent opacity-0 [background:radial-gradient(100px_circle_at_var(--x)_var(--y),rgba(14,165,233,0.15),transparent_40%)] group-hover:opacity-100 transition-opacity duration-300" 
          onMouseMove={(e) => {
             const rect = (e.currentTarget as HTMLElement).getBoundingClientRect();
             e.currentTarget.style.setProperty('--x', `${e.clientX - rect.left}px`);
@@ -95,11 +95,11 @@ export const InfoCard: React.FC<InfoCardProps> = ({ iconName, title, value, inde
         }}></div>
 
       <div className="relative flex items-start gap-4">
-        <div className="bg-neutral-800/50 p-2 rounded-lg">
-          <Icon name={iconName} className="w-6 h-6 text-sky-400" />
+        <div className="bg-slate-100 dark:bg-neutral-800/50 p-2 rounded-lg">
+          <Icon name={iconName} className="w-6 h-6 text-sky-500 dark:text-sky-400" />
         </div>
         <div className="flex-1 min-w-0">
-          <p className="text-sm font-medium text-slate-400 mb-1 truncate">
+          <p className="text-sm font-medium text-slate-500 dark:text-slate-400 mb-1 truncate">
             {title}
             {isApproximate && <span className="text-red-500 ml-1">*</span>}
           </p>
@@ -109,10 +109,10 @@ export const InfoCard: React.FC<InfoCardProps> = ({ iconName, title, value, inde
        <button
         onClick={handleCopy}
         aria-label={`Copy ${title} to clipboard`}
-        className="absolute top-4 right-4 p-1.5 rounded-full bg-neutral-800/60 text-slate-400 hover:text-white hover:bg-neutral-700/80 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-sky-500"
+        className="absolute top-4 right-4 p-1.5 rounded-full bg-slate-100 dark:bg-neutral-800/60 text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-white hover:bg-slate-200 dark:hover:bg-neutral-700/80 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-sky-500"
       >
         {isCopied ? (
-          <Icon name="check" className="w-4 h-4 text-green-400" />
+          <Icon name="check" className="w-4 h-4 text-green-500 dark:text-green-400" />
         ) : (
           <Icon name="copy" className="w-4 h-4" />
         )}

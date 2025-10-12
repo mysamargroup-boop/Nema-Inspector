@@ -16,8 +16,8 @@ export const LiveClock: React.FC = () => {
 
     return (
         <div className="flex items-center gap-2">
-            <Icon name="clock" className="w-5 h-5 text-slate-400" />
-            <span className="text-sm font-medium text-slate-200">
+            <Icon name="clock" className="w-5 h-5 text-slate-500 dark:text-slate-400" />
+            <span className="text-sm font-medium text-slate-600 dark:text-slate-200">
                 {time.toLocaleTimeString()}
             </span>
         </div>
