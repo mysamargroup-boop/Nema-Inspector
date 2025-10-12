@@ -1,5 +1,5 @@
 {
   "name": "Nema Inspector",
-  "description": "A sleek and modern web application that displays detailed information about your device, browser, and network connection, presented in an attractive and animated interface.",
+  "description": "Instantly inspect your device's vital statistics with Nema Inspector. A sleek, modern tool to check your IP address, browser, screen resolution, network, and hardware details.",
   "requestFramePermissions": []
 }

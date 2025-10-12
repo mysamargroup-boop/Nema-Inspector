@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Icon, IconName } from './Icon';
 
 // Since we can't import framer-motion, we will simulate the animation with CSS
-const MotionDiv: React.FC<{ index: number; children: React.ReactNode; className?: string }> = ({ index, children, className }) => {
+const MotionDiv: React.FC<{ index: number; children: React.ReactNode; className?: string; onClick: () => void; }> = ({ index, children, className, onClick }) => {
     // A simple animation to fade in and slide up. The delay is based on the index.
     const style = {
         animation: `fadeInUp 0.5s ease-out forwards`,
@@ -24,7 +24,7 @@ const MotionDiv: React.FC<{ index: number; children: React.ReactNode; className?
                     }
                 }
             `}</style>
-            <div style={style} className={className}>
+            <div style={style} className={className} onClick={onClick}>
                 {children}
             </div>
         </>
@@ -37,6 +37,8 @@ interface InfoCardProps {
   title: string;
   value: string | number | boolean;
   index: number;
+  isApproximate?: boolean;
+  onClick: () => void;
 }
 
 const renderValue = (title: string, value: string | number | boolean) => {
@@ -48,13 +50,12 @@ const renderValue = (title: string, value: string | number | boolean) => {
         );
     }
     
-    // Use smaller font for long text values to prevent overflow
     if (['User Agent', 'Browser Vendor', 'Timezone', 'Screen Orientation', 'IP Address', 'ISP'].includes(title)) {
-        return <span className="text-base font-medium text-white break-all">{String(value)}</span>;
+        return <span className="text-sm font-medium text-white break-all">{String(value)}</span>;
     }
 
     if (typeof value === 'string' && (value.endsWith('px') || value.endsWith('%'))) {
-         const parts = value.match(/(\d+)(.*)/);
+         const parts = value.match(/(\d+\.?\d*)(.*)/);
          if(parts) {
             return <><span className="text-2xl sm:text-3xl font-bold text-white">{parts[1]}</span><span className="text-slate-400 text-lg ml-1">{parts[2]}</span></>
          }
@@ -63,10 +64,11 @@ const renderValue = (title: string, value: string | number | boolean) => {
     return <span className="text-2xl sm:text-3xl font-bold text-white break-words">{String(value)}</span>;
 }
 
-export const InfoCard: React.FC<InfoCardProps> = ({ iconName, title, value, index }) => {
+export const InfoCard: React.FC<InfoCardProps> = ({ iconName, title, value, index, isApproximate, onClick }) => {
   const [isCopied, setIsCopied] = useState(false);
 
-  const handleCopy = () => {
+  const handleCopy = (e: React.MouseEvent) => {
+    e.stopPropagation(); // Prevent card click event when copying
     if (isCopied) return;
     navigator.clipboard.writeText(String(value)).then(
       () => {
@@ -82,26 +84,37 @@ export const InfoCard: React.FC<InfoCardProps> = ({ iconName, title, value, inde
   return (
     <MotionDiv
       index={index}
-      className="relative bg-neutral-900/50 border border-neutral-800 rounded-xl p-5 backdrop-blur-sm transition-all duration-300 hover:border-sky-500/50 hover:bg-neutral-800 hover:-translate-y-1"
+      onClick={onClick}
+      className="relative group bg-neutral-900/50 border border-neutral-800 rounded-xl p-5 backdrop-blur-sm transition-all duration-300 hover:border-sky-500/50 hover:bg-neutral-800/60 hover:-translate-y-1 cursor-pointer"
     >
-      <div className="flex items-start gap-4">
+      <div className="absolute -inset-px rounded-xl border-2 border-transparent opacity-0 [background:radial-gradient(100px_circle_at_var(--x)_var(--y),rgba(34,197,94,0.2),transparent_40%)] group-hover:opacity-100 transition-opacity duration-300" 
+         onMouseMove={(e) => {
+            const rect = (e.currentTarget as HTMLElement).getBoundingClientRect();
+            e.currentTarget.style.setProperty('--x', `${e.clientX - rect.left}px`);
+            e.currentTarget.style.setProperty('--y', `${e.clientY - rect.top}px`);
+        }}></div>
+
+      <div className="relative flex items-start gap-4">
         <div className="bg-neutral-800/50 p-2 rounded-lg">
           <Icon name={iconName} className="w-6 h-6 text-sky-400" />
         </div>
         <div className="flex-1 min-w-0">
-          <p className="text-sm font-medium text-slate-400 mb-1 truncate">{title}</p>
+          <p className="text-sm font-medium text-slate-400 mb-1 truncate">
+            {title}
+            {isApproximate && <span className="text-red-500 ml-1">*</span>}
+          </p>
           <div className="min-h-[44px] flex items-center">{renderValue(title, value)}</div>
         </div>
       </div>
        <button
         onClick={handleCopy}
         aria-label={`Copy ${title} to clipboard`}
-        className="absolute top-4 right-4 p-2 rounded-full bg-neutral-800/60 text-slate-400 hover:text-white hover:bg-neutral-700/80 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-sky-500"
+        className="absolute top-4 right-4 p-1.5 rounded-full bg-neutral-800/60 text-slate-400 hover:text-white hover:bg-neutral-700/80 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-sky-500"
       >
         {isCopied ? (
-          <Icon name="check" className="w-5 h-5 text-green-400" />
+          <Icon name="check" className="w-4 h-4 text-green-400" />
         ) : (
-          <Icon name="copy" className="w-5 h-5" />
+          <Icon name="copy" className="w-4 h-4" />
         )}
       </button>
     </MotionDiv>

@@ -40,7 +40,7 @@ export const useDeviceInfo = () => {
         try {
           if ('getBattery' in navigator) {
             const battery = await (navigator as any).getBattery();
-            info.batteryLevel = `${Math.floor(battery.level * 100)}%`;
+            info.batteryLevel = `${(battery.level * 100).toFixed(0)}%`;
             info.isCharging = battery.charging;
           } else {
              info.batteryLevel = 'N/A';

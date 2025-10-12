@@ -1,12 +1,73 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useDeviceInfo } from './hooks/useDeviceInfo';
 import { InfoCard } from './components/InfoCard';
 import { Header } from './components/Header';
 import { Footer } from './components/Footer';
 import { IconName } from './components/Icon';
+import { DetailModal } from './components/DetailModal';
+import { dataDescriptions } from './utils/dataDescriptions';
+
+// Add type declaration for jspdf library from CDN
+declare global {
+  interface Window {
+    jspdf: any;
+  }
+}
+
+interface ModalData {
+  title: string;
+  value: string | number | boolean;
+  description: string;
+}
 
 const App: React.FC = () => {
   const { deviceInfo, loading } = useDeviceInfo();
+  const [modalData, setModalData] = useState<ModalData | null>(null);
+
+  const handleDownloadReport = () => {
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF({ orientation: 'p', unit: 'mm', format: 'a4' });
+
+    doc.setFont('Helvetica', 'bold');
+    doc.setFontSize(20);
+    doc.text('Nema Inspector - Device Report', 105, 20, { align: 'center' });
+    
+    doc.setFontSize(10);
+    doc.setFont('Helvetica', 'normal');
+    doc.text(`Generated on: ${new Date().toLocaleString()}`, 105, 28, { align: 'center' });
+
+    let y = 45;
+    infoItems.forEach(item => {
+        if (y > 280) { // New page if content overflows
+            doc.addPage();
+            y = 20;
+        }
+        const value = deviceInfo[item.key];
+        if (value !== null && value !== undefined && value !== 'N/A' && value !== 'Unavailable') {
+            let formattedValue = String(value);
+            if (typeof value === 'boolean') formattedValue = value ? 'Enabled' : 'Disabled';
+
+            doc.setFont('Helvetica', 'bold');
+            doc.text(`${item.title}:`, 15, y);
+            
+            doc.setFont('Helvetica', 'normal');
+            const splitValue = doc.splitTextToSize(formattedValue, 130);
+            doc.text(splitValue, 65, y);
+            
+            y += (splitValue.length * 5) + 4; // Increment y position
+        }
+    });
+
+    doc.save('nema-inspector-report.pdf');
+  };
+  
+  const handleCardClick = (title: string, value: string | number | boolean) => {
+    setModalData({
+      title,
+      value,
+      description: dataDescriptions[title] || "No additional information available."
+    });
+  };
 
   const infoItems: { key: keyof typeof deviceInfo; title: string; icon: IconName }[] = [
     { key: 'onlineStatus', title: 'Network Status', icon: 'wifi' },
@@ -41,17 +102,28 @@ const App: React.FC = () => {
     { key: 'isCharging', title: 'Charging Status', icon: 'zap' },
   ];
 
+  const approximateKeys: (keyof typeof deviceInfo)[] = ['deviceMemory', 'cpuCores', 'connectionType', 'ipAddress', 'isp', 'city', 'country'];
+
   return (
-    <div className="min-h-screen bg-black text-white p-4 sm:p-6 lg:p-8">
-      <div className="max-w-7xl mx-auto">
-        <Header />
+    <div className="min-h-screen bg-transparent text-white flex flex-col">
+      <Header onDownloadReport={handleDownloadReport} />
+      
+      <main className="w-full max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-4 pt-24 pb-8 flex-grow">
+        <div className="text-center mb-10">
+           <h1 className="text-4xl sm:text-5xl font-extrabold tracking-tight bg-gradient-to-r from-sky-400 to-blue-500 text-transparent bg-clip-text">
+              Device Inspector
+            </h1>
+            <p className="mt-4 text-lg text-slate-400 max-w-2xl mx-auto">
+              Your device's vital statistics, beautifully presented. Here's what the browser knows about you.
+            </p>
+        </div>
 
         {loading ? (
           <div className="flex justify-center items-center h-64">
              <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-sky-400"></div>
           </div>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {infoItems.map((item, index) => {
               const value = deviceInfo[item.key];
               if (value === null || value === undefined || value === 'N/A' || value === 'Unavailable') return null;
@@ -63,13 +135,22 @@ const App: React.FC = () => {
                   value={value}
                   iconName={item.icon}
                   index={index}
+                  isApproximate={approximateKeys.includes(item.key)}
+                  onClick={() => handleCardClick(item.title, value)}
                 />
               );
             })}
           </div>
         )}
-        <Footer />
-      </div>
+      </main>
+      
+      <Footer />
+
+      <DetailModal 
+        isOpen={!!modalData}
+        onClose={() => setModalData(null)}
+        data={modalData}
+      />
     </div>
   );
 };

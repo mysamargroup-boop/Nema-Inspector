@@ -6,7 +6,7 @@ export type IconName =
   'memory' | 'signal' | 'battery' | 'touch' | 'ratio' |
   'timezone' | 'vendor' | 'shield' | 'pdf' | 'screen-arrows' |
   'orientation' | 'location' | 'ip' | 'isp' | 'city' | 
-  'country' | 'copy' | 'check';
+  'country' | 'copy' | 'check' | 'logo' | 'download' | 'clock';
 
 interface IconProps {
   name: IconName;
@@ -14,7 +14,6 @@ interface IconProps {
 }
 
 export const Icon: React.FC<IconProps> = ({ name, className }) => {
-  // Fix: Replaced JSX.Element with React.ReactElement to resolve "Cannot find namespace 'JSX'" error.
   const icons: Record<IconName, React.ReactElement> = {
     smartphone: <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 1.5H8.25A2.25 2.25 0 0 0 6 3.75v16.5a2.25 2.25 0 0 0 2.25 2.25h7.5A2.25 2.25 0 0 0 18 20.25V3.75a2.25 2.25 0 0 0-2.25-2.25H13.5m-3 0V3h3V1.5m-3 0h3m-3 18.75h3" />,
     monitor: <path strokeLinecap="round" strokeLinejoin="round" d="M9 17.25v1.007a3 3 0 0 1-.879 2.122L7.5 21h9l-.621-.621A3 3 0 0 1 15 18.257V17.25m6-12V15a2.25 2.25 0 0 1-2.25 2.25H5.25A2.25 2.25 0 0 1 3 15V5.25A2.25 2.25 0 0 1 5.25 3h13.5A2.25 2.25 0 0 1 21 5.25Z" />,
@@ -44,6 +43,9 @@ export const Icon: React.FC<IconProps> = ({ name, className }) => {
     country: <path strokeLinecap="round" strokeLinejoin="round" d="M3 3v1.5M3 21v-1.5m18 0v1.5M21 3v-1.5M8.25 3h7.5M8.25 21h7.5m-15-12v6.75c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V9.75M8.25 9.75h7.5" />,
     copy: <path strokeLinecap="round" strokeLinejoin="round" d="M9 5.25H7.525a2.25 2.25 0 0 0-2.25 2.25v10.5a2.25 2.25 0 0 0 2.25 2.25h10.5a2.25 2.25 0 0 0 2.25-2.25V7.525a2.25 2.25 0 0 0-2.25-2.25H15m-3-3v3.75m-3.75-3.75h7.5" />,
     check: <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />,
+    logo: <path strokeLinecap="round" strokeLinejoin="round" d="M12 2.25c-5.462 0-9.922 4.394-9.995 9.848-.052 3.821 2.058 7.29 5.237 8.89a9.782 9.782 0 0 0 4.758 1.262c5.462 0 9.922-4.394 9.995-9.848.052-3.821-2.058-7.29-5.237-8.89a9.782 9.782 0 0 0-4.758-1.262Z M12 2.25v19.5" />,
+    download: <path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />,
+    clock: <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />,
   };
   
   return (

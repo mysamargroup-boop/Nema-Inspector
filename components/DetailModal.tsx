@@ -1,0 +1,94 @@
+import React, { useEffect } from 'react';
+import { Icon } from './Icon';
+
+interface ModalData {
+  title: string;
+  value: string | number | boolean;
+  description: string;
+}
+
+interface DetailModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+  data: ModalData | null;
+}
+
+export const DetailModal: React.FC<DetailModalProps> = ({ isOpen, onClose, data }) => {
+  useEffect(() => {
+    const handleEsc = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        onClose();
+      }
+    };
+    window.addEventListener('keydown', handleEsc);
+    return () => {
+      window.removeEventListener('keydown', handleEsc);
+    };
+  }, [onClose]);
+
+  if (!isOpen || !data) {
+    return null;
+  }
+
+  const renderValue = () => {
+    if (typeof data.value === 'boolean') {
+        return (
+            <span className={`px-3 py-1 text-sm font-medium rounded-full ${data.value ? 'bg-green-500/20 text-green-300' : 'bg-red-500/20 text-red-300'}`}>
+                {data.value ? 'Enabled' : 'Disabled'}
+            </span>
+        );
+    }
+    return <span className="text-lg font-medium text-white break-all">{String(data.value)}</span>;
+  }
+
+  return (
+    <>
+    <style>{`
+      .modal-fade-enter { opacity: 0; }
+      .modal-fade-enter-active { opacity: 1; transition: opacity 200ms; }
+      .modal-fade-exit { opacity: 1; }
+      .modal-fade-exit-active { opacity: 0; transition: opacity 200ms; }
+      .modal-content-enter { transform: scale(0.95); opacity: 0; }
+      .modal-content-enter-active { transform: scale(1); opacity: 1; transition: all 200ms; }
+      .modal-content-exit { transform: scale(1); opacity: 1; }
+      .modal-content-exit-active { transform: scale(0.95); opacity: 0; transition: all 200ms; }
+    `}</style>
+    <div
+      className={`modal-fade-enter-active fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm`}
+      onClick={onClose}
+      aria-modal="true"
+      role="dialog"
+    >
+      <div
+        className={`modal-content-enter-active relative w-full max-w-lg bg-neutral-900 border border-neutral-700 rounded-xl shadow-2xl shadow-black/30`}
+        onClick={(e) => e.stopPropagation()}
+      >
+        <div className="p-6 border-b border-neutral-800">
+            <h2 className="text-xl font-bold text-white">{data.title}</h2>
+        </div>
+        <div className="p-6 space-y-4">
+            <div className="p-4 rounded-lg bg-neutral-800/50">
+                {renderValue()}
+            </div>
+            <p className="text-slate-400 text-base">{data.description}</p>
+        </div>
+        <div className="p-4 bg-neutral-900/50 border-t border-neutral-800 rounded-b-xl flex justify-end">
+            <button
+                onClick={onClose}
+                className="px-4 py-2 rounded-md bg-neutral-700 text-sm text-slate-200 hover:text-white hover:bg-neutral-600 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-sky-500"
+            >
+                Close
+            </button>
+        </div>
+        <button
+            onClick={onClose}
+            aria-label="Close modal"
+            className="absolute top-4 right-4 p-2 rounded-full text-slate-500 hover:text-white hover:bg-neutral-700/80 transition-all duration-200"
+        >
+            <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
+        </button>
+      </div>
+    </div>
+    </>
+  );
+};
