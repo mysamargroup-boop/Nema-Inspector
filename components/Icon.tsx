@@ -5,7 +5,8 @@ export type IconName =
   'cpu' | 'cookie' | 'browser' | 'window' | 'palette' |
   'memory' | 'signal' | 'battery' | 'touch' | 'ratio' |
   'timezone' | 'vendor' | 'shield' | 'pdf' | 'screen-arrows' |
-  'orientation' | 'location';
+  'orientation' | 'location' | 'ip' | 'isp' | 'city' | 
+  'country' | 'copy' | 'check';
 
 interface IconProps {
   name: IconName;
@@ -37,6 +38,12 @@ export const Icon: React.FC<IconProps> = ({ name, className }) => {
     'screen-arrows': <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 3.75v4.5m0-4.5h4.5m-4.5 0L9 9M3.75 20.25v-4.5m0 4.5h4.5m-4.5 0L9 15M20.25 3.75h-4.5m4.5 0v4.5m0-4.5L15 9m4.5 11.25h-4.5m4.5 0v-4.5m0 4.5L15 15" />,
     orientation: <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 17.25L12 21m0 0-3.75-3.75M12 21V3" />,
     location: <path strokeLinecap="round" strokeLinejoin="round" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm0 0c0 2.683-3.15 5.62-5.25 7.373a.75.75 0 0 1-1.002 0C6.65 16.12 3.5 13.183 3.5 10.5a6.5 6.5 0 1 1 13 0Z" />,
+    ip: <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 12a4.5 4.5 0 1 1-9 0 4.5 4.5 0 0 1 9 0Zm0 0c0 1.657 1.007 3 2.25 3S21 13.657 21 12a9 9 0 1 0-2.636 6.364" />,
+    isp: <path strokeLinecap="round" strokeLinejoin="round" d="M21.75 17.25v-.228a4.5 4.5 0 0 0-.12-1.03l-2.268-9.64a3.375 3.375 0 0 0-3.285-2.65H8.228a3.375 3.375 0 0 0-3.285 2.65l-2.268 9.64a4.5 4.5 0 0 0-.12 1.03v.228m15.56 0a2.25 2.25 0 0 1-2.25 2.25H6.94a2.25 2.25 0 0 1-2.25-2.25m15.56 0v-1.5a2.25 2.25 0 0 0-2.25-2.25H6.94a2.25 2.25 0 0 0-2.25 2.25v1.5m15.56 0h-12.5" />,
+    city: <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 21h19.5m-18-18v18m10.5-18v18m6-13.5V21M6.75 6.75h.75v.75h-.75V6.75Zm0 3h.75v.75h-.75V9.75Zm0 3h.75v.75h-.75V12.75Zm0 3h.75v.75h-.75V15.75Zm3-9h.75v.75h-.75V6.75Zm0 3h.75v.75h-.75V9.75Zm0 3h.75v.75h-.75V12.75Zm0 3h.75v.75h-.75V15.75Zm3-9h.75v.75h-.75V6.75Zm0 3h.75v.75h-.75V9.75Zm0 3h.75v.75h-.75V12.75Z" />,
+    country: <path strokeLinecap="round" strokeLinejoin="round" d="M3 3v1.5M3 21v-1.5m18 0v1.5M21 3v-1.5M8.25 3h7.5M8.25 21h7.5m-15-12v6.75c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V9.75M8.25 9.75h7.5" />,
+    copy: <path strokeLinecap="round" strokeLinejoin="round" d="M9 5.25H7.525a2.25 2.25 0 0 0-2.25 2.25v10.5a2.25 2.25 0 0 0 2.25 2.25h10.5a2.25 2.25 0 0 0 2.25-2.25V7.525a2.25 2.25 0 0 0-2.25-2.25H15m-3-3v3.75m-3.75-3.75h7.5" />,
+    check: <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />,
   };
   
   return (

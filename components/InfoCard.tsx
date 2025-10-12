@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Icon, IconName } from './Icon';
 
 // Since we can't import framer-motion, we will simulate the animation with CSS
@@ -49,7 +49,7 @@ const renderValue = (title: string, value: string | number | boolean) => {
     }
     
     // Use smaller font for long text values to prevent overflow
-    if (title === 'User Agent' || title === 'Browser Vendor' || title === 'Timezone' || title === 'Screen Orientation') {
+    if (['User Agent', 'Browser Vendor', 'Timezone', 'Screen Orientation', 'IP Address', 'ISP'].includes(title)) {
         return <span className="text-base font-medium text-white break-all">{String(value)}</span>;
     }
 
@@ -64,10 +64,25 @@ const renderValue = (title: string, value: string | number | boolean) => {
 }
 
 export const InfoCard: React.FC<InfoCardProps> = ({ iconName, title, value, index }) => {
+  const [isCopied, setIsCopied] = useState(false);
+
+  const handleCopy = () => {
+    if (isCopied) return;
+    navigator.clipboard.writeText(String(value)).then(
+      () => {
+        setIsCopied(true);
+        setTimeout(() => setIsCopied(false), 2000);
+      },
+      (err) => {
+        console.error('Failed to copy: ', err);
+      }
+    );
+  };
+  
   return (
     <MotionDiv
       index={index}
-      className="bg-neutral-900/50 border border-neutral-800 rounded-xl p-5 backdrop-blur-sm transition-all duration-300 hover:border-sky-500/50 hover:bg-neutral-800 hover:-translate-y-1"
+      className="relative bg-neutral-900/50 border border-neutral-800 rounded-xl p-5 backdrop-blur-sm transition-all duration-300 hover:border-sky-500/50 hover:bg-neutral-800 hover:-translate-y-1"
     >
       <div className="flex items-start gap-4">
         <div className="bg-neutral-800/50 p-2 rounded-lg">
@@ -78,6 +93,17 @@ export const InfoCard: React.FC<InfoCardProps> = ({ iconName, title, value, inde
           <div className="min-h-[44px] flex items-center">{renderValue(title, value)}</div>
         </div>
       </div>
+       <button
+        onClick={handleCopy}
+        aria-label={`Copy ${title} to clipboard`}
+        className="absolute top-4 right-4 p-2 rounded-full bg-neutral-800/60 text-slate-400 hover:text-white hover:bg-neutral-700/80 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-sky-500"
+      >
+        {isCopied ? (
+          <Icon name="check" className="w-5 h-5 text-green-400" />
+        ) : (
+          <Icon name="copy" className="w-5 h-5" />
+        )}
+      </button>
     </MotionDiv>
   );
 };

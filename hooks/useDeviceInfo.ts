@@ -61,6 +61,25 @@ export const useDeviceInfo = () => {
             info.geolocationPermission = 'Unavailable';
         }
 
+        try {
+            const ipResponse = await fetch('https://ipapi.co/json/');
+            if (ipResponse.ok) {
+                const ipData = await ipResponse.json();
+                info.ipAddress = ipData.ip || 'N/A';
+                info.city = ipData.city || 'N/A';
+                info.country = ipData.country_name || 'N/A';
+                info.isp = ipData.org || 'N/A';
+            } else {
+                throw new Error('IP API request failed');
+            }
+        } catch (e) {
+            console.warn("Could not fetch IP info:", e);
+            info.ipAddress = 'Unavailable';
+            info.city = 'Unavailable';
+            info.country = 'Unavailable';
+            info.isp = 'Unavailable';
+        }
+
         setDeviceInfo(info);
       } catch (error) {
         console.error("Failed to fetch device info:", error);

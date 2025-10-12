@@ -9,12 +9,16 @@ const App: React.FC = () => {
   const { deviceInfo, loading } = useDeviceInfo();
 
   const infoItems: { key: keyof typeof deviceInfo; title: string; icon: IconName }[] = [
+    { key: 'onlineStatus', title: 'Network Status', icon: 'wifi' },
+    { key: 'connectionType', title: 'Connection Type', icon: 'signal' },
+    { key: 'ipAddress', title: 'IP Address', icon: 'ip' },
+    { key: 'isp', title: 'ISP', icon: 'isp' },
+    { key: 'city', title: 'City', icon: 'city' },
+    { key: 'country', title: 'Country', icon: 'country' },
     { key: 'userAgent', title: 'User Agent', icon: 'browser' },
     { key: 'platform', title: 'Platform', icon: 'cpu' },
     { key: 'language', title: 'Language', icon: 'globe' },
     { key: 'browserVendor', title: 'Browser Vendor', icon: 'vendor' },
-    { key: 'onlineStatus', title: 'Network Status', icon: 'wifi' },
-    { key: 'connectionType', title: 'Connection Type', icon: 'signal' },
     { key: 'doNotTrack', title: 'Do Not Track', icon: 'shield' },
     { key: 'cookiesEnabled', title: 'Cookies Enabled', icon: 'cookie' },
     { key: 'pdfViewerEnabled', title: 'PDF Viewer Enabled', icon: 'pdf' },
@@ -50,7 +54,7 @@ const App: React.FC = () => {
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-8">
             {infoItems.map((item, index) => {
               const value = deviceInfo[item.key];
-              if (value === null || value === undefined || value === 'N/A') return null;
+              if (value === null || value === undefined || value === 'N/A' || value === 'Unavailable') return null;
               
               return (
                 <InfoCard

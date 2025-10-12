@@ -26,4 +26,8 @@ export interface DeviceInfo {
   availableScreenHeight: number;
   screenOrientation: string;
   geolocationPermission: string;
+  ipAddress?: string;
+  city?: string;
+  country?: string;
+  isp?: string;
 }
