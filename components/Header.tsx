@@ -1,6 +1,6 @@
 import React from 'react';
-import { Icon } from './Icon';
-import { LiveClock } from './LiveClock';
+import { Icon } from './Icon.tsx';
+import { LiveClock } from './LiveClock.tsx';
 
 interface HeaderProps {
     onDownloadReport: () => void;

@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import { useDeviceInfo } from './hooks/useDeviceInfo';
-import { InfoCard } from './components/InfoCard';
-import { Header } from './components/Header';
-import { Footer } from './components/Footer';
-import { IconName } from './components/Icon';
-import { DetailModal } from './components/DetailModal';
-import { dataDescriptions } from './utils/dataDescriptions';
+import { useDeviceInfo } from './hooks/useDeviceInfo.ts';
+import { InfoCard } from './components/InfoCard.tsx';
+import { Header } from './components/Header.tsx';
+import { Footer } from './components/Footer.tsx';
+import { IconName } from './components/Icon.tsx';
+import { DetailModal } from './components/DetailModal.tsx';
+import { dataDescriptions } from './utils/dataDescriptions.ts';
 
 // Add type declaration for jspdf library from CDN
 declare global {

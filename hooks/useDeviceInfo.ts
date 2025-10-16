@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { DeviceInfo } from '../types';
+import { DeviceInfo } from '../types.ts';
 
 const parseUserAgent = (ua: string) => {
     let os = 'Unknown OS';

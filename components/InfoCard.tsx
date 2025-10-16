@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Icon, IconName } from './Icon';
+import { Icon, IconName } from './Icon.tsx';
 
 // Since we can't import framer-motion, we will simulate the animation with CSS
 const MotionDiv: React.FC<{ index: number; children: React.ReactNode; className?: string; onClick: () => void; }> = ({ index, children, className, onClick }) => {
