@@ -1,5 +1,7 @@
+// FIX: Import React
 import React from 'react';
 
+// FIX: Export Footer component
 export const Footer: React.FC = () => {
   return (
     <footer className="w-full text-center py-6 border-t border-neutral-200/80 dark:border-neutral-800/50">

@@ -1,52 +1,55 @@
-import { useState, useEffect } from 'react';
-import { DeviceInfo } from '../types.ts';
+// FIX: Import React and hooks
+import React, { useState, useEffect } from 'react';
+// FIX: Import DeviceInfo type
+import { DeviceInfo } from '../types';
 
-const parseUserAgent = (ua: string) => {
-    let os = 'Unknown OS';
-    let deviceModel = 'Unknown Device';
-
-    // OS Detection
-    if (/android/i.test(ua)) {
-        const match = ua.match(/Android ([\d.]+)/);
-        os = match ? `Android ${match[1]}` : 'Android';
-    } else if (/iPad|iPhone|iPod/.test(ua)) {
-        const match = ua.match(/OS ([\d_]+)/);
-        os = match ? `iOS ${match[1].replace(/_/g, '.')}` : 'iOS';
-    } else if (/Windows NT 10.0/.test(ua)) {
-        os = 'Windows 11/10';
-    } else if (/Windows NT 6.3/.test(ua)) {
-        os = 'Windows 8.1';
-    } else if (/Windows NT 6.2/.test(ua)) {
-        os = 'Windows 8';
-    } else if (/Windows NT 6.1/.test(ua)) {
-        os = 'Windows 7';
-    } else if (/Mac OS X/.test(ua)) {
-        const match = ua.match(/Mac OS X ([\d_]+)/);
-        os = match ? `macOS ${match[1].replace(/_/g, '.')}` : 'macOS';
-    } else if (/Linux/.test(ua) && !/android/i.test(ua)) {
-        os = 'Linux';
-    }
-
-    // Device Model Detection
-    const androidModelMatch = ua.match(/\(Linux; Android [\d.]+; (.*?)\)/);
-    if (androidModelMatch && androidModelMatch[1]) {
-        deviceModel = androidModelMatch[1].split(' Build/')[0];
-    } else if (/iPhone/.test(ua)) {
-        deviceModel = 'iPhone';
-    } else if (/iPad/.test(ua)) {
-        deviceModel = 'iPad';
-    } else if (/iPod/.test(ua)) {
-        deviceModel = 'iPod Touch';
-    } else if (os.startsWith('Windows') || os.startsWith('macOS') || os === 'Linux') {
-        deviceModel = 'Desktop / Laptop';
-    }
-    
-    return { os, deviceModel };
-};
-
+// FIX: Export useDeviceInfo hook
 export const useDeviceInfo = () => {
   const [deviceInfo, setDeviceInfo] = useState<DeviceInfo>({} as DeviceInfo);
   const [loading, setLoading] = useState<boolean>(true);
+
+  const parseUserAgent = (ua: string) => {
+      let os = 'Unknown OS';
+      let deviceModel = 'Unknown Device';
+
+      // OS Detection
+      if (/android/i.test(ua)) {
+          const match = ua.match(/Android ([\d.]+)/);
+          os = match ? `Android ${match[1]}` : 'Android';
+      } else if (/iPad|iPhone|iPod/.test(ua)) {
+          const match = ua.match(/OS ([\d_]+)/);
+          os = match ? `iOS ${match[1].replace(/_/g, '.')}` : 'iOS';
+      } else if (/Windows NT 10.0/.test(ua)) {
+          os = 'Windows 11/10';
+      } else if (/Windows NT 6.3/.test(ua)) {
+          os = 'Windows 8.1';
+      } else if (/Windows NT 6.2/.test(ua)) {
+          os = 'Windows 8';
+      } else if (/Windows NT 6.1/.test(ua)) {
+          os = 'Windows 7';
+      } else if (/Mac OS X/.test(ua)) {
+          const match = ua.match(/Mac OS X ([\d_]+)/);
+          os = match ? `macOS ${match[1].replace(/_/g, '.')}` : 'macOS';
+      } else if (/Linux/.test(ua) && !/android/i.test(ua)) {
+          os = 'Linux';
+      }
+
+      // Device Model Detection
+      const androidModelMatch = ua.match(/\(Linux; Android [\d.]+; (.*?)\)/);
+      if (androidModelMatch && androidModelMatch[1]) {
+          deviceModel = androidModelMatch[1].split(' Build/')[0];
+      } else if (/iPhone/.test(ua)) {
+          deviceModel = 'iPhone';
+      } else if (/iPad/.test(ua)) {
+          deviceModel = 'iPad';
+      } else if (/iPod/.test(ua)) {
+          deviceModel = 'iPod Touch';
+      } else if (os.startsWith('Windows') || os.startsWith('macOS') || os === 'Linux') {
+          deviceModel = 'Desktop / Laptop';
+      }
+      
+      return { os, deviceModel };
+  };
 
   useEffect(() => {
     const fetchDeviceInfo = async () => {

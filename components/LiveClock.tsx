@@ -1,6 +1,9 @@
+// FIX: Import React and hooks
 import React, { useState, useEffect } from 'react';
-import { Icon } from './Icon.tsx';
+// FIX: Import Icon component
+import { Icon } from './Icon';
 
+// FIX: Export LiveClock component
 export const LiveClock: React.FC = () => {
     const [time, setTime] = useState(new Date());
 

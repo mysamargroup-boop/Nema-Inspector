@@ -1,18 +1,17 @@
+// FIX: Import React and hooks
 import React, { useEffect } from 'react';
 
-interface ModalData {
-  title: string;
-  value: string | number | boolean;
-  description: string;
-}
-
-interface DetailModalProps {
+// FIX: Export DetailModal component
+export const DetailModal: React.FC<{
   isOpen: boolean;
   onClose: () => void;
-  data: ModalData | null;
-}
-
-export const DetailModal: React.FC<DetailModalProps> = ({ isOpen, onClose, data }) => {
+  data: {
+    title: string;
+    value: string | number | boolean;
+    description: string;
+  } | null;
+}> = ({ isOpen, onClose, data }) => {
+  
   useEffect(() => {
     const handleEsc = (event: KeyboardEvent) => {
       if (event.key === 'Escape') {

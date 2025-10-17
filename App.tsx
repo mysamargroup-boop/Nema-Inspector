@@ -1,13 +1,16 @@
+// FIX: Import React and hooks
 import React, { useState } from 'react';
-import { useDeviceInfo } from './hooks/useDeviceInfo.ts';
-import { InfoCard } from './components/InfoCard.tsx';
-import { Header } from './components/Header.tsx';
-import { Footer } from './components/Footer.tsx';
-import { IconName } from './components/Icon.tsx';
-import { DetailModal } from './components/DetailModal.tsx';
-import { dataDescriptions } from './utils/dataDescriptions.ts';
+// FIX: Import necessary components, hooks, types, and utils
+import { useDeviceInfo } from './hooks/useDeviceInfo';
+import { Header } from './components/Header';
+import { InfoCard } from './components/InfoCard';
+import { Footer } from './components/Footer';
+import { DetailModal } from './components/DetailModal';
+import { IconName } from './components/Icon';
+import { dataDescriptions } from './utils/dataDescriptions';
 
-// Add type declaration for jspdf library from CDN
+
+// FIX: Add type declaration for jspdf library at the top level
 declare global {
   interface Window {
     jspdf: any;
@@ -20,53 +23,55 @@ interface ModalData {
   description: string;
 }
 
-const infoItems: { key: keyof ReturnType<typeof useDeviceInfo>['deviceInfo']; title: string; icon: IconName }[] = [
-  { key: 'onlineStatus', title: 'Network Status', icon: 'wifi' },
-  { key: 'connectionType', title: 'Connection Type', icon: 'signal' },
-  { key: 'networkSpeed', title: 'Network Speed (Mbps)', icon: 'speed' },
-  { key: 'roundTripTime', title: 'Round-Trip Time (ms)', icon: 'rtt' },
-  { key: 'dataSaverEnabled', title: 'Data Saver', icon: 'data-saver' },
-  { key: 'ipAddress', title: 'IP Address', icon: 'ip' },
-  { key: 'isp', title: 'ISP', icon: 'isp' },
-  { key: 'city', title: 'City', icon: 'city' },
-  { key: 'country', title: 'Country', icon: 'country' },
-  { key: 'os', title: 'Operating System', icon: 'os' },
-  { key: 'deviceModel', title: 'Device Model', icon: 'device' },
-  { key: 'userAgent', title: 'User Agent', icon: 'browser' },
-  { key: 'language', title: 'Language', icon: 'globe' },
-  { key: 'browserVendor', title: 'Browser Vendor', icon: 'vendor' },
-  { key: 'doNotTrack', title: 'Do Not Track', icon: 'shield' },
-  { key: 'cookiesEnabled', title: 'Cookies Enabled', icon: 'cookie' },
-  { key: 'pdfViewerEnabled', title: 'PDF Viewer Enabled', icon: 'pdf' },
-  { key: 'touchSupport', title: 'Touch Support', icon: 'touch' },
-  { key: 'screenWidth', title: 'Screen Width', icon: 'monitor' },
-  { key: 'screenHeight', title: 'Screen Height', icon: 'monitor' },
-  { key: 'availableScreenWidth', title: 'Available Screen Width', icon: 'screen-arrows' },
-  { key: 'availableScreenHeight', title: 'Available Screen Height', icon: 'screen-arrows' },
-  { key: 'windowWidth', title: 'Window Width', icon: 'window' },
-  { key: 'windowHeight', title: 'Window Height', icon: 'window' },
-  { key: 'screenOrientation', title: 'Screen Orientation', icon: 'orientation' },
-  { key: 'colorDepth', title: 'Color Depth', icon: 'palette' },
-  { key: 'pixelDepth', title: 'Pixel Depth', icon: 'palette' },
-  { key: 'devicePixelRatio', title: 'Device Pixel Ratio', icon: 'ratio' },
-  { key: 'deviceMemory', title: 'Device Memory (GB)', icon: 'memory' },
-  { key: 'cpuCores', title: 'CPU Cores', icon: 'cpu' },
-  { key: 'timezone', title: 'Timezone', icon: 'timezone' },
-  { key: 'geolocationPermission', title: 'Geolocation Permission', icon: 'location' },
-  { key: 'batteryLevel', title: 'Battery Level', icon: 'battery' },
-  { key: 'isCharging', title: 'Charging Status', icon: 'zap' },
-];
-
-const approximateKeys: (keyof ReturnType<typeof useDeviceInfo>['deviceInfo'])[] = [
-    'deviceMemory', 'cpuCores', 'connectionType', 'ipAddress', 'isp', 'city', 'country', 
-    'os', 'deviceModel', 'networkSpeed', 'roundTripTime'
-];
-
-const App: React.FC = () => {
+// FIX: Export App component
+export const App: React.FC = () => {
   const { deviceInfo, loading } = useDeviceInfo();
   const [modalData, setModalData] = useState<ModalData | null>(null);
 
+  const infoItems: { key: keyof ReturnType<typeof useDeviceInfo>['deviceInfo']; title: string; icon: IconName }[] = [
+    { key: 'onlineStatus', title: 'Network Status', icon: 'wifi' },
+    { key: 'connectionType', title: 'Connection Type', icon: 'signal' },
+    { key: 'networkSpeed', title: 'Network Speed (Mbps)', icon: 'speed' },
+    { key: 'roundTripTime', title: 'Round-Trip Time (ms)', icon: 'rtt' },
+    { key: 'dataSaverEnabled', title: 'Data Saver', icon: 'data-saver' },
+    { key: 'ipAddress', title: 'IP Address', icon: 'ip' },
+    { key: 'isp', title: 'ISP', icon: 'isp' },
+    { key: 'city', title: 'City', icon: 'city' },
+    { key: 'country', title: 'Country', icon: 'country' },
+    { key: 'os', title: 'Operating System', icon: 'os' },
+    { key: 'deviceModel', title: 'Device Model', icon: 'device' },
+    { key: 'userAgent', title: 'User Agent', icon: 'browser' },
+    { key: 'language', title: 'Language', icon: 'globe' },
+    { key: 'browserVendor', title: 'Browser Vendor', icon: 'vendor' },
+    { key: 'doNotTrack', title: 'Do Not Track', icon: 'shield' },
+    { key: 'cookiesEnabled', title: 'Cookies Enabled', icon: 'cookie' },
+    { key: 'pdfViewerEnabled', title: 'PDF Viewer Enabled', icon: 'pdf' },
+    { key: 'touchSupport', title: 'Touch Support', icon: 'touch' },
+    { key: 'screenWidth', title: 'Screen Width', icon: 'monitor' },
+    { key: 'screenHeight', title: 'Screen Height', icon: 'monitor' },
+    { key: 'availableScreenWidth', title: 'Available Screen Width', icon: 'screen-arrows' },
+    { key: 'availableScreenHeight', title: 'Available Screen Height', icon: 'screen-arrows' },
+    { key: 'windowWidth', title: 'Window Width', icon: 'window' },
+    { key: 'windowHeight', title: 'Window Height', icon: 'window' },
+    { key: 'screenOrientation', title: 'Screen Orientation', icon: 'orientation' },
+    { key: 'colorDepth', title: 'Color Depth', icon: 'palette' },
+    { key: 'pixelDepth', title: 'Pixel Depth', icon: 'palette' },
+    { key: 'devicePixelRatio', title: 'Device Pixel Ratio', icon: 'ratio' },
+    { key: 'deviceMemory', title: 'Device Memory (GB)', icon: 'memory' },
+    { key: 'cpuCores', title: 'CPU Cores', icon: 'cpu' },
+    { key: 'timezone', title: 'Timezone', icon: 'timezone' },
+    { key: 'geolocationPermission', title: 'Geolocation Permission', icon: 'location' },
+    { key: 'batteryLevel', title: 'Battery Level', icon: 'battery' },
+    { key: 'isCharging', title: 'Charging Status', icon: 'zap' },
+  ];
+
+  const approximateKeys: (keyof ReturnType<typeof useDeviceInfo>['deviceInfo'])[] = [
+      'deviceMemory', 'cpuCores', 'connectionType', 'ipAddress', 'isp', 'city', 'country', 
+      'os', 'deviceModel', 'networkSpeed', 'roundTripTime'
+  ];
+
   const handleDownloadReport = () => {
+    // FIX: Access jspdf correctly from the window object
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF({ orientation: 'p', unit: 'mm', format: 'a4' });
 
@@ -161,5 +166,3 @@ const App: React.FC = () => {
     </div>
   );
 };
-
-export default App;

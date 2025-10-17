@@ -1,3 +1,4 @@
+// FIX: Export dataDescriptions to make it available for import.
 export const dataDescriptions: Record<string, string> = {
     'Network Status': 'Indicates if your browser is currently connected to the internet. "Enabled" means you are online.',
     'Connection Type': 'Estimates the effective type of the connection the user\'s device is using to communicate with the network (e.g., 4G, Wi-Fi). This is an approximation.',

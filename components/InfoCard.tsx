@@ -1,7 +1,8 @@
+// FIX: Import React and hooks
 import React, { useState } from 'react';
-import { Icon, IconName } from './Icon.tsx';
+// FIX: Import Icon component and IconName type
+import { Icon, IconName } from './Icon';
 
-// Since we can't import framer-motion, we will simulate the animation with CSS
 const MotionDiv: React.FC<{ index: number; children: React.ReactNode; className?: string; onClick: () => void; }> = ({ index, children, className, onClick }) => {
     // A simple animation to fade in and slide up. The delay is based on the index.
     const style = {
@@ -70,6 +71,7 @@ const renderValue = (title: string, value: string | number | boolean) => {
     return <span className="text-2xl sm:text-3xl font-bold text-slate-800 dark:text-white break-words">{String(value)}</span>;
 }
 
+// FIX: Export InfoCard component
 export const InfoCard: React.FC<InfoCardProps> = ({ iconName, title, value, index, isApproximate, onClick }) => {
   const [isCopied, setIsCopied] = useState(false);
 

@@ -1,5 +1,7 @@
+// FIX: Import React
 import React from 'react';
 
+// FIX: Export IconName type
 export type IconName = 
   'smartphone' | 'monitor' | 'globe' | 'zap' | 'wifi' | 
   'cpu' | 'cookie' | 'browser' | 'window' | 'palette' |
@@ -14,6 +16,7 @@ interface IconProps {
   className?: string;
 }
 
+// FIX: Export Icon component
 export const Icon: React.FC<IconProps> = ({ name, className }) => {
   const icons: Record<IconName, React.ReactElement> = {
     smartphone: <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 1.5H8.25A2.25 2.25 0 0 0 6 3.75v16.5a2.25 2.25 0 0 0 2.25 2.25h7.5A2.25 2.25 0 0 0 18 20.25V3.75a2.25 2.25 0 0 0-2.25-2.25H13.5m-3 0V3h3V1.5m-3 0h3m-3 18.75h3" />,
