@@ -190,7 +190,7 @@ export const useDeviceInfo = () => {
             await fetchIPLocation();
         }
 
-        setDeviceInfo(info as DeviceInfo);
+        setDeviceInfo(prev => ({ ...prev, ...info }));
       } catch (error) {
         console.error("Failed to fetch device info:", error);
       } finally {
