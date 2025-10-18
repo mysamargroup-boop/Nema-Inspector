@@ -123,6 +123,8 @@ export const useDeviceInfo = () => {
                 info.city = ipData.city || 'N/A';
                 info.country = ipData.country_name || 'N/A';
                 info.isp = ipData.org || 'N/A';
+                info.latitude = ipData.latitude;
+                info.longitude = ipData.longitude;
             } else {
                 throw new Error('IP API request failed');
             }

@@ -31,7 +31,7 @@ export const DetailModal: React.FC<{
   const renderValue = () => {
     if (typeof data.value === 'boolean') {
         return (
-            <span className={`px-3 py-1 text-sm font-medium rounded-full ${data.value ? 'bg-green-100 dark:bg-green-500/20 text-green-700 dark:text-green-300' : 'bg-red-100 dark:bg-red-500/20 text-red-700 dark:text-red-300'}`}>
+            <span className={`px-3 py-1 text-base font-medium rounded-full ${data.value ? 'bg-green-100 dark:bg-green-500/20 text-green-700 dark:text-green-300' : 'bg-red-100 dark:bg-red-500/20 text-red-700 dark:text-red-300'}`}>
                 {data.value ? 'Enabled' : 'Disabled'}
             </span>
         );
@@ -73,7 +73,7 @@ export const DetailModal: React.FC<{
         <div className="p-4 bg-slate-50 dark:bg-neutral-900/50 border-t border-neutral-200 dark:border-neutral-800 rounded-b-xl flex justify-end">
             <button
                 onClick={onClose}
-                className="px-4 py-2 rounded-md bg-slate-200 dark:bg-neutral-700 text-sm text-slate-700 dark:text-slate-200 hover:text-slate-900 dark:hover:text-white hover:bg-slate-300 dark:hover:bg-neutral-600 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-sky-500"
+                className="px-4 py-2 rounded-md bg-slate-200 dark:bg-neutral-700 text-base text-slate-700 dark:text-slate-200 hover:text-slate-900 dark:hover:text-white hover:bg-slate-300 dark:hover:bg-neutral-600 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-sky-500"
             >
                 Close
             </button>

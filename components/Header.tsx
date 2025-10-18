@@ -3,6 +3,7 @@ import React from 'react';
 // FIX: Import Icon and LiveClock components
 import { Icon } from './Icon';
 import { LiveClock } from './LiveClock';
+import { ShareButtons } from './ShareButtons';
 
 // FIX: Export Header component
 export const Header: React.FC<{ onDownloadReport: () => void; }> = ({ onDownloadReport }) => {
@@ -19,6 +20,7 @@ export const Header: React.FC<{ onDownloadReport: () => void; }> = ({ onDownload
           </div>
           <div className="flex items-center gap-2 sm:gap-4">
              <LiveClock />
+             <ShareButtons url="https://inspect.nemaonline.in" title="Nema Inspector - Your Ultimate Device & Browser Inspector" />
              <button
                 onClick={onDownloadReport}
                 aria-label="Download full report"

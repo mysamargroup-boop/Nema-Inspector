@@ -9,7 +9,7 @@ export type IconName =
   'timezone' | 'vendor' | 'shield' | 'pdf' | 'screen-arrows' |
   'orientation' | 'location' | 'ip' | 'isp' | 'city' | 
   'country' | 'copy' | 'check' | 'logo' | 'download' | 'clock' |
-  'speed' | 'rtt' | 'data-saver' | 'os' | 'device';
+  'speed' | 'rtt' | 'data-saver' | 'os' | 'device' | 'twitter' | 'facebook' | 'linkedin' | 'sun' | 'moon';
 
 interface IconProps {
   name: IconName;
@@ -55,6 +55,11 @@ export const Icon: React.FC<IconProps> = ({ name, className }) => {
     'data-saver': <path strokeLinecap="round" strokeLinejoin="round" d="M12 21a9 9 0 0 1-9-9 9 9 0 0 1 9-9 9 9 0 0 1 9 9c0 2.347-.94 4.486-2.475 6.025A9.75 9.75 0 0 1 12 21Z" />,
     os: <path strokeLinecap="round" strokeLinejoin="round" d="M6.75 7.5 3 12l3.75 4.5M17.25 7.5 21 12l-3.75 4.5M14.25 4.5l-4.5 15" />,
     device: <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 1.5H8.25A2.25 2.25 0 0 0 6 3.75v16.5a2.25 2.25 0 0 0 2.25 2.25h7.5A2.25 2.25 0 0 0 18 20.25V3.75A2.25 2.25 0 0 0 15.75 1.5h-2.25m-3 0V3h3V1.5m-3 0h3m-3 18.75h3" />,
+    twitter: <path d="M22.46,6C21.69,6.35 20.86,6.58 20,6.69C20.88,6.16 21.56,5.32 21.88,4.31C21.05,4.81 20.13,5.16 19.16,5.36C18.37,4.5 17.26,4 16,4C13.65,4 11.73,5.92 11.73,8.26C11.73,8.6 11.77,8.92 11.84,9.22C8.28,9.03 5.15,7.38 3.02,4.76C2.66,5.39 2.45,6.13 2.45,6.91C2.45,8.43 3.23,9.78 4.34,10.5C3.62,10.48 2.96,10.28 2.38,9.95C2.38,9.97 2.38,9.99 2.38,10.01C2.38,12.11 3.86,13.85 5.82,14.24C5.46,14.34 5.08,14.39 4.69,14.39C4.42,14.39 4.15,14.36 3.89,14.31C4.43,16.03 6.02,17.25 7.89,17.29C6.43,18.45 4.58,19.13 2.56,19.13C2.22,19.13 1.88,19.11 1.54,19.07C3.44,20.29 5.7,21 8.12,21C16,21 20.33,14.46 20.33,8.79C20.33,8.62 20.33,8.45 20.32,8.28C21.17,7.67 21.88,6.89 22.46,6Z" />,
+    facebook: <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />,
+    linkedin: <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM6 9h-4V21h4V9zM4 2a2 2 0 1 0 0 4 2 2 0 0 0 0-4z" />,
+    sun: <path strokeLinecap="round" strokeLinejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M12 12a5 5 0 1 0 0-10 5 5 0 0 0 0 10Z" />,
+    moon: <path strokeLinecap="round" strokeLinejoin="round" d="M21.752 15.002A9.718 9.718 0 0 1 18 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 0 0 3 11.25c0 5.385 4.365 9.75 9.75 9.75 2.572 0 4.92-.99 6.697-2.648Z" />
   };
   
   return (

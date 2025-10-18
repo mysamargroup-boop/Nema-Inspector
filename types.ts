@@ -30,6 +30,8 @@ export interface DeviceInfo {
   city?: string;
   country?: string;
   isp?: string;
+  latitude?: number;
+  longitude?: number;
   // New properties
   os?: string;
   deviceModel?: string;

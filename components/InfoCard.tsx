@@ -45,14 +45,14 @@ interface InfoCardProps {
 const renderValue = (title: string, value: string | number | boolean) => {
     if (typeof value === 'boolean') {
         return (
-            <span className={`px-3 py-1 text-sm font-medium rounded-full ${value ? 'bg-green-100 dark:bg-green-500/20 text-green-700 dark:text-green-300' : 'bg-red-100 dark:bg-red-500/20 text-red-700 dark:text-red-300'}`}>
+            <span className={`px-3 py-1 text-base font-medium rounded-full ${value ? 'bg-green-100 dark:bg-green-500/20 text-green-700 dark:text-green-300' : 'bg-red-100 dark:bg-red-500/20 text-red-700 dark:text-red-300'}`}>
                 {value ? 'Enabled' : 'Disabled'}
             </span>
         );
     }
     
     if (['User Agent', 'Browser Vendor', 'Timezone', 'Screen Orientation', 'IP Address', 'ISP', 'Operating System', 'Device Model'].includes(title)) {
-        return <span className="text-sm font-medium text-slate-800 dark:text-white break-all">{String(value)}</span>;
+        return <span className="text-base font-medium text-slate-800 dark:text-white break-all">{String(value)}</span>;
     }
 
     const unitMatch = title.match(/\(([^)]+)\)/);
@@ -107,7 +107,7 @@ export const InfoCard: React.FC<InfoCardProps> = ({ iconName, title, value, inde
           <Icon name={iconName} className="w-6 h-6 text-sky-500 dark:text-sky-400" />
         </div>
         <div className="flex-1 min-w-0">
-          <p className="text-sm font-medium text-slate-500 dark:text-slate-400 mb-1 truncate">
+          <p className="text-base font-medium text-slate-500 dark:text-slate-400 mb-1 truncate">
             {title}
             {isApproximate && <span className="text-red-500 ml-1">*</span>}
           </p>
