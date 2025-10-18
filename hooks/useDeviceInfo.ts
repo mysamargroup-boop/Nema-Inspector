@@ -1,4 +1,4 @@
-// FIX: Import React and hooks
+'''// FIX: Import React and hooks
 import React, { useState, useEffect } from 'react';
 // FIX: Import DeviceInfo type
 import { DeviceInfo } from '../types';
@@ -49,6 +49,61 @@ export const useDeviceInfo = () => {
       }
       
       return { os, deviceModel };
+  };
+
+  const fetchIPLocation = async () => {
+      try {
+          const ipResponse = await fetch('https://ipapi.co/json/');
+          if (ipResponse.ok) {
+              const ipData = await ipResponse.json();
+              setDeviceInfo(prev => ({
+                  ...prev,
+                  ipAddress: ipData.ip || 'N/A',
+                  city: ipData.city || 'N/A',
+                  country: ipData.country_name || 'N/A',
+                  isp: ipData.org || 'N/A',
+                  latitude: prev.latitude ?? ipData.latitude,
+                  longitude: prev.longitude ?? ipData.longitude,
+              }));
+          } else {
+              throw new Error('IP API request failed');
+          }
+      } catch (e) {
+          console.warn("Could not fetch IP info:", e);
+          setDeviceInfo(prev => ({
+              ...prev,
+              ipAddress: 'Unavailable',
+              city: 'Unavailable',
+              country: 'Unavailable',
+              isp: 'Unavailable',
+          }));
+      }
+  };
+
+  const requestGeolocation = () => {
+    if ('geolocation' in navigator) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          setDeviceInfo((prev) => ({
+            ...prev,
+            latitude: position.coords.latitude,
+            longitude: position.coords.longitude,
+            geolocationPermission: 'granted',
+          }));
+        },
+        () => {
+          setDeviceInfo((prev) => ({
+            ...prev,
+            geolocationPermission: 'denied',
+          }));
+        }
+      );
+    } else {
+        setDeviceInfo((prev) => ({
+            ...prev,
+            geolocationPermission: 'unavailable'
+        }))
+    }
   };
 
   useEffect(() => {
@@ -109,31 +164,30 @@ export const useDeviceInfo = () => {
             if ('permissions' in navigator) {
                 const permissionStatus = await navigator.permissions.query({ name: 'geolocation' });
                 info.geolocationPermission = permissionStatus.state;
+
+                if (permissionStatus.state === 'granted') {
+                    navigator.geolocation.getCurrentPosition(
+                        (position) => {
+                            setDeviceInfo(prev => ({
+                                ...prev,
+                                latitude: position.coords.latitude,
+                                longitude: position.coords.longitude,
+                            }));
+                        },
+                        async () => {
+                            await fetchIPLocation();
+                        }
+                    );
+                } else {
+                    await fetchIPLocation();
+                }
+            } else {
+                await fetchIPLocation();
             }
         } catch (e) {
             console.warn("Could not query geolocation permission:", e);
             info.geolocationPermission = 'Unavailable';
-        }
-
-        try {
-            const ipResponse = await fetch('https://ipapi.co/json/');
-            if (ipResponse.ok) {
-                const ipData = await ipResponse.json();
-                info.ipAddress = ipData.ip || 'N/A';
-                info.city = ipData.city || 'N/A';
-                info.country = ipData.country_name || 'N/A';
-                info.isp = ipData.org || 'N/A';
-                info.latitude = ipData.latitude;
-                info.longitude = ipData.longitude;
-            } else {
-                throw new Error('IP API request failed');
-            }
-        } catch (e) {
-            console.warn("Could not fetch IP info:", e);
-            info.ipAddress = 'Unavailable';
-            info.city = 'Unavailable';
-            info.country = 'Unavailable';
-            info.isp = 'Unavailable';
+            await fetchIPLocation();
         }
 
         setDeviceInfo(info as DeviceInfo);
@@ -162,5 +216,6 @@ export const useDeviceInfo = () => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  return { deviceInfo, loading };
+  return { deviceInfo, loading, requestGeolocation };
 };
+'''

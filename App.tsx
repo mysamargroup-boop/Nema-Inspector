@@ -1,4 +1,4 @@
-// FIX: Import React and hooks
+'''// FIX: Import React and hooks
 import React, { useState } from 'react';
 // FIX: Import necessary components, hooks, types, and utils
 import { useDeviceInfo } from './hooks/useDeviceInfo';
@@ -27,7 +27,7 @@ interface ModalData {
 
 // FIX: Export App component
 export const App: React.FC = () => {
-  const { deviceInfo, loading } = useDeviceInfo();
+  const { deviceInfo, loading, requestGeolocation } = useDeviceInfo();
   const [modalData, setModalData] = useState<ModalData | null>(null);
 
   const infoItems: { key: keyof ReturnType<typeof useDeviceInfo>['deviceInfo']; title: string; icon: IconName }[] = [
@@ -169,11 +169,19 @@ export const App: React.FC = () => {
             {deviceInfo.latitude && deviceInfo.longitude && (
               <div className="mt-16 text-center">
                 <h2 className="text-3xl font-bold tracking-tight text-slate-800 dark:text-white mb-6">
-                  Your Approximate Location
+                  {deviceInfo.geolocationPermission === 'granted' ? 'Your Precise Location' : 'Your Approximate Location'}
                 </h2>
                 <div className="max-w-4xl mx-auto">
                   <LocationMap latitude={deviceInfo.latitude} longitude={deviceInfo.longitude} />
                 </div>
+                {deviceInfo.geolocationPermission !== 'granted' && (
+                    <button 
+                        onClick={requestGeolocation}
+                        className="mt-6 bg-sky-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-sky-600 transition-colors"
+                    >
+                        Share Precise Location
+                    </button>
+                )}
               </div>
             )}
           </>
@@ -190,3 +198,4 @@ export const App: React.FC = () => {
     </div>
   );
 };
+'''
