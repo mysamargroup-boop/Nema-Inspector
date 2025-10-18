@@ -1,4 +1,4 @@
-'''// FIX: Import React and hooks
+// FIX: Import React and hooks
 import React, { useState } from 'react';
 // FIX: Import necessary components, hooks, types, and utils
 import { useDeviceInfo } from './hooks/useDeviceInfo';
@@ -198,4 +198,3 @@ export const App: React.FC = () => {
     </div>
   );
 };
-'''
