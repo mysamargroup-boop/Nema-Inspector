@@ -1,4 +1,4 @@
-'''// FIX: Import React and hooks
+// FIX: Import React and hooks
 import React, { useState, useEffect } from 'react';
 // FIX: Import DeviceInfo type
 import { DeviceInfo } from '../types';
@@ -218,4 +218,3 @@ export const useDeviceInfo = () => {
 
   return { deviceInfo, loading, requestGeolocation };
 };
-'''
