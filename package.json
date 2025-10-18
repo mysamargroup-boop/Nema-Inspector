@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "prebuild": "node update-sitemap.js",
+    "prebuild": "node update-sitemap.cjs",
     "build": "vite build",
     "preview": "vite preview"
   },
